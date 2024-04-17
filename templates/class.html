@@ -1,0 +1,97 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/classes.js') }}"></script>
+<body>
+ {% include 'top_menus.html' %}
+  <div class="container">        
+      {% include 'left_menus.html' %}    
+	  <div class="content">
+		<div class="container-fluid">   	
+			<div class="row">
+				<a href="#"><strong><span class="ti-crown"></span> Classes Section</strong></a>
+				<hr>		
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-10">
+							<h3 class="panel-title"></h3>
+						</div>
+						<div class="col-md-2" align="right">
+							<button type="button" name="add" id="addClass" class="btn btn-success btn-xs">Add New Class</button>
+						</div>
+					</div>
+				</div>
+				<table id="classList" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>class_id</th>
+							<th>class_name</th>	
+							<th>class_teacher_id</th>
+							<th>Department</th>							
+							<th></th>
+							<th></th>							
+						</tr>
+					</thead>
+					<tbody>
+					  {% for class in classes %}
+					  <tr>
+						<td>{{class.class_id}}</td>
+						<td>{{class.class_name}}</td>
+						<td>{{class.class_teacher_id}}</td>
+						<td>{{class.Department}}</td>							
+						<td><a href="{{url_for('edit_class', class_id=class.class_id)}}" class="btn btn-primary update">Edit</a></td>
+						<td><a href="{{url_for('delete_class', class_id=class.class_id)}}" class="btn btn-danger">Delete</a></td>
+					  </tr> 
+					{% endfor %}	  
+					</tbody>
+				</table>
+			</div>
+		</div>	
+	</div>
+  </div>
+  <div id="classModal" class="modal fade">
+	<div class="modal-dialog">
+		<form method="post" id="classForm" action="{{ url_for('save_class')}}">
+			<div class="modal-content">
+				<div class="form-group">
+					<label for="class_id" class="control-label">Class ID*</label>
+					<input type="text" class="form-control" id="class_id" name="class_id" placeholder="class_id"  required>					
+				</div>	
+				<div class="form-group">
+					<label for="class_name" class="control-label">Class Name*</label>
+					<input type="text" class="form-control" id="class_name" name="class_name" placeholder="Class Name"  required>					
+				</div>
+				<div class="form-group">
+					<label for="class_teacher_id" class="control-label">class_teacher_id*</label>	
+					<select name="class_teacher_id" id="class_teacher_id" class="form-control" required>
+						<option value="">Select Teacher</option>
+						{% for teacher in teachers %}
+							<option value="{{teacher.Teacher_Id}}">{{teacher.Teacher_Id}}</option>	
+						{% endfor %}		 
+					</select>
+				</div>	
+				<div class="form-group">
+					<label for="Department" class="control-label">Department*</label>	
+					<select name="Department" id="Department" class="form-control" required>
+						<option value="">--Select Department--</option>
+						<option value="Computer Science">Computer Science</option>
+						<option value="Data Science">Data Science</option>
+						<option value="Statistics">Statistics</option>
+						<option value="Chemistry">Chemistry</option>
+						<option value="Administration">Administration</option>
+
+						
+					</select>
+			<!-- </div> -->
+					
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="classid" id="classid" />
+					<input type="hidden" name="action" id="action" value="" />
+					<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

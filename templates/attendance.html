@@ -1,0 +1,102 @@
+{% include 'header.html' %}
+<body>
+ {% include 'top_menus.html' %}
+  <div class="container">        
+      {% include 'left_menus.html' %}    
+	  <div class="content">
+		<div class="container-fluid">   	
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title"><i class="fa fa-search"></i> Select Criteria</h3>
+						</div>
+						<form id="form1" action="{{ url_for('getClassAttendance')}}" method="post" accept-charset="utf-8">
+							<div class="box-body">						
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Class</label><small class="req"> *</small>
+											<select id="class_id" name="class_id" class="form-control" required>
+												<option value="">Select</option>
+												{% for class in classes %}								
+													<option value="{{class.class_id}}" {% if class.class_id == class_id %} selected {% endif %}>{{class.class_id}}</option>				
+												{% endfor %}												
+											</select>
+											<span class="text-danger"></span>
+										</div>
+									</div>
+									<!-- <div class="col-md-4">
+										<div class="form-group">
+											<label for="exampleInputEmail1">student_attendance</label><small class="req"> *</small>
+												<select name="StudentId" id="StudentId" class="form-control" required>
+													<option value="">Select</option>
+													{% for section in student_attendance %}
+														<option value="{{section.StudentId}}" {% if section.section_id == StudentId %} selected {% endif %}>{{section.StudentId}}</option>	
+													{% endfor %}
+												</select>
+											<span class="text-danger"></span>
+										</div>
+									</div> 									 -->
+								</div>
+							</div>
+							<div class="box-footer">
+								<button type="submit" id="search" name="search" value="search" style="margin-bottom:10px;" class="btn btn-primary btn-sm  checkbox-toggle"><i class="fa fa-search"></i> Search</button> <br>
+							</div>
+						</form>
+					</div>					
+					<div class="row">					
+						<form id="attendanceForm" method="post">					
+							<div style="color:red;margin-top:20px;" class="" id="message"></div>
+							<button type="submit" id="saveAttendance" name="saveAttendance" value="Save Attendance" style="margin-bottom:10px;" class="btn btn-primary btn-sm  pull-right checkbox-toggle hidden"><i class="fa fa-save"></i> Save Attendance</button> <table id="studentList" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>StudentId</th>
+									<!-- <th>Name</th> -->
+									<th>Class_id</th>
+									<!-- <th>CoursesTaken</th>	 -->
+									<th>classteacher</th>
+									<th>CoursesTaken</th>
+									<th>Date</th>
+									<th>Attendance</th>	
+									<th></th>												
+								</tr>
+							</thead>
+							<tbody>
+							    {% for attendance in student_attendance %}
+								<tr>
+									<td>{{attendance.StudentId}}</td>
+									<!-- <td>{{attendance.Name}}</td> -->
+									<td>{{attendance.Class_id}}</td>
+									<td>{{attendance.classteacher}}</td>
+									<td>{{attendance.CoursesTaken}}</td>
+									<td>{{attendance.Date}}</td>
+									<td>{{attendance.Attendance}}</td>
+									<td><a href="{{url_for('update_attendance', StudentId=attendance.StudentId)}}" id="{{attendance.StudentId}}" class="btn btn-primary update">Update</a></td>
+									<!-- <td>
+									
+									<input type="radio" id="attendencetype1_"+{{attendance.StudentId}}+" value="1" name="attendencetype_"+{{attendance.StudentId}}+"  '.$checked['1'].'>
+									<label for="attendencetype_"+{{attendance.StudentId}}+">Present</label>
+									<input type="radio" id="attendencetype2_"+{{attendance.StudentId}}+"" value="2" name="attendencetype_"+{{attendance.StudentId}}+""  '.$checked['2'].'>
+									<label for="attendencetype"+{{attendance.StudentId}}+">On-Duty </label>
+									<input type="radio" id="attendencetype3_"+{{attendance.StudentId}}+" value="3" name="attendencetype_"+{{attendance.StudentId}}+"  '.$checked['3'].'>
+									<label for="attendencetype3_"+{{attendance.StudentId}}+">Absent</label>
+									
+									
+									</td>													 -->
+								</tr>
+								{% endfor %}
+							</tbody>
+							</table>
+							<input type="hidden" name="action" id="action" value="updateAttendance" />
+							<input type="hidden" name="att_classid" id="att_classid" value="" />
+							<input type="hidden" name="att_sectionid" id="att_sectionid" value="" />
+						</form>
+					</div>							
+				</div>
+			</div>
+		</div>	
+	</div>
+  </div>
+  </body>
+</html>

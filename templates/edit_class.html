@@ -1,0 +1,67 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/classes.js') }}"></script>
+<body>
+	{% include 'top_menus.html' %}
+	<div class="container">        
+		{% include 'left_menus.html' %}    
+		<div class="content">
+			<div class="container-fluid">   	
+				<div class="row">
+				<a href="#"><strong><span class="ti-crown"></span> Edit Class</strong></a>
+				<hr>
+				{% for class in classes %}
+					<form method="post" id="classForm" action="{{ url_for('save_class')}}">					
+						<div class="form-group">
+							<label for="class_id" class="control-label">Class ID*</label>
+							<input type="text" class="form-control" id="class_id" name="class_id" placeholder="class_id" value="{{class.class_id}}" required>					
+						</div>	
+						<div class="form-group">
+							<label for="class_name" class="control-label">Class Name*</label>
+							<input type="text" class="form-control" id="class_name" name="class_name" placeholder="Class Name" value="{{class.class_name}}" required>					
+						</div>
+						<div class="form-group">
+							<label for="class_teacher_id" class="control-label">class_teacher_id*</label>	
+							<select name="class_teacher_id" id="class_teacher_id" class="form-control" required>
+								<option value="">Select Teacher</option>
+								{% for teacher in teachers %}
+									<option value="{{teacher.Teacher_Id}}">{{teacher.Teacher_Id}}</option>	
+								{% endfor %}		 
+							</select>
+						</div>	
+						<div class="form-group">
+							<label for="Department" class="control-label">Department*</label>	
+							<select name="Department" id="Department" class="form-control" required>
+								<option value="{{class.Department}}">{{class.Department}}</option>
+								<option value="Computer Science">Computer Science</option>
+								<option value="Data Science">Data Science</option>
+								<option value="Statistics">Statistics</option>
+								<option value="Chemistry">Chemistry</option>
+								<option value="Administration">Administration</option>
+
+								
+							</select>
+					</div>
+						
+						<!-- <div class="form-group">
+							<label for="mname" class="control-label">Assign Class Teacher*</label>	
+							<select name="teacherid" id="teacherid" class="form-control" required>
+								<option value="">--Select--</option>
+								{% for teacher in teachers %}
+									<option value="{{teacher.teacher_id}}">{{teacher.teacher}}</option>	
+								{% endfor %}	 
+							</select>
+						</div>							 -->
+						<div class="modal-footer">
+							<input type="hidden" name="class_id" id="class_id" value="{{class.class_id}}" />
+							<input type="hidden" name="action" id="action" value="updateClass" />
+							<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>						
+					</form>
+				{% endfor %}						
+				</div>	
+			</div>
+		</div>	
+	</div> 
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!-- {% include 'header.html' %} -->
+<!-- <script src="{{ url_for('static',filename='js/teaacher.js') }}"></script> -->
+<!-- <body>
+	{% include 'top_menus.html' %}
+	<div class="container">        
+		{% include 'left_menus.html' %}    
+		<div class="content">
+			<div class="container-fluid">   	
+				<div class="row">
+				<a href="#"><strong><span class="ti-crown"></span> Edit Teacher</strong></a>
+				<hr>
+				{% for teacher in teachers %}
+					<form method="post" id="teacherForm" action="{{ url_for('save_teacher')}}">			
+											
+						<div class="form-group">							
+							<label for="Teacher_Id" class="control-label">Teacher_Id</label>				
+							<input type="text" name="Teacher_Id" id="Teacher_Id" autocomplete="off" class="form-control" placeholder="Teacher_Id" value="{{teacher.Teacher_Id}}"/>										
+							<label for="FirstName" class="control-label">FirstName</label>				
+							<input type="text" name="FirstName" id="FirstName" autocomplete="off" class="form-control" placeholder="FirstName" value="{{teacher.FirstName}}"/>
+							<label for="LastName" class="control-label">LastName</label>				
+							<input type="text" name="LastName" id="LastName" autocomplete="off" class="form-control" placeholder="LastName" value="{{teacher.LastName}}"/>
+							<label for="Email" class="control-label">Email</label>				
+							<input type="text" name="Email" id="Email" autocomplete="off" class="form-control" placeholder="Email" value="{{teacher.Email}}"/>
+							<label for="Expertise" class="control-label">Expertise</label>				
+							<input type="text" name="Expertise" id="Expertise" autocomplete="off" class="form-control" placeholder="Expertise" value="{{teacher.Expertise}}"/>
+							<label for="YearsOfExperience" class="control-label">YearsOfExperience</label>				
+							<input type="text" name="YearsOfExperience" id="YearsOfExperience" autocomplete="off" class="form-control" placeholder="YearsOfExperience" value="{{teacher.YearsOfExperience}}"/>
+							<label for="Recognitions" class="control-label">Recognitions</label>				
+							<input type="text" name="Recognitions" id="Recognitions" autocomplete="off" class="form-control" placeholder="Recognitions" value="{{teacher.Recognitions}}"/>
+							<label for="Department" class="control-label">Department</label>				
+							<input type="text" name="Department" id="Department" autocomplete="off" class="form-control" placeholder="Department" value="{{teacher.Department}}"/>
+							<label for="OfficeHours" class="control-label">OfficeHours</label>				
+							<input type="text" name="OfficeHours" id="OfficeHours" autocomplete="off" class="form-control" placeholder="OfficeHours" value="{{teacher.OfficeHours}}"/>
+
+						</div>						
+						<div class="form-group">
+							<label for="Specialization" class="control-label">Specialization</label>				
+							<select class="form-control" id="specialization" name="specialization"/>
+								<option value="">--Select--</option>
+								{% for subject in subjects %}
+									<option value="{{subject.subject_id}}">{{subject.subject}}</option>		
+								{% endfor %}								
+							</select>							
+						</div>
+						<div class="form-group">
+							<label for="Course_Id" class="control-label">Course_Id</label>				
+							<select class="form-control" id="Course_Id" name="Course_Id"/>
+								<option value="">--Select--</option>
+								{% for subject in subjects %}
+									<option value="{{subject.course_id}}">{{subject.course_id}}</option>		
+								{% endfor %}								
+							</select>							
+						</div>	
+						
+						<div class="modal-footer">
+							<input type="hidden" name="Teacher_Id" id="Teacher_Id" value="{{teacher.Teacher_Id}}" />						
+							<input type="hidden" name="action" id="action" value="updateTeacher" />
+							<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+						</div>
+					
+					</form>
+				{% endfor %}						
+				</div>	
+			</div>
+		</div>	
+	</div> 
+</body> -->
+<!-- </html> -->
+
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/teaacher.js') }}"></script>
+<body>
+	{% include 'top_menus.html' %}
+	<div class="container">        
+		{% include 'left_menus.html' %}    
+		<div class="content">
+			<div class="container-fluid">   	
+				<div class="row">
+				<a href="#"><strong><span class="ti-crown"></span> Edit Teacher</strong></a>
+				<hr>
+				{% for teacher in teachers %}
+					<form method="post" id="teacherForm" action="{{ url_for('save_teacher')}}">			
+											
+						<div class="form-group">							
+							<label for="Teacher_Id" class="control-label">Teacher_Id</label>				
+							<input type="text" name="Teacher_Id" id="Teacher_Id" autocomplete="off" class="form-control" placeholder="Teacher_Id" value="{{teacher.Teacher_Id}}"/>										
+						</div>
+						<div class="form-group">							
+							<label for="FirstName" class="control-label">FirstName</label>				
+							<input type="text" name="FirstName" id="FirstName" autocomplete="off" class="form-control" placeholder="FirstName" value="{{teacher.FirstName}}"/>										
+						</div>
+						<div class="form-group">							
+							<label for="LastName" class="control-label">LastName</label>				
+							<input type="text" name="LastName" id="LastName" autocomplete="off" class="form-control" placeholder="LastName" value="{{teacher.LastName}}"/>										
+						</div>
+						<div class="form-group">							
+							<label for="Email" class="control-label">Email</label>				
+							<input type="email" name="Email" id="Email" autocomplete="off" class="form-control" placeholder="Email" value="{{teacher.Email}}"/>										
+						</div>
+						<div class="form-group">
+								<label for="Department" class="control-label">Department*</label>	
+								<select name="Department" id="Department" class="form-control" required>
+									<option value="{{teacher.Department}}">{{teacher.Department}}</option>
+									<option value="Computer Science">Computer Science</option>
+									<option value="Data Science">Data Science</option>
+									<option value="Statistics">Statistics</option>
+									<option value="Chemistry">Chemistry</option>
+									<option value="Intelligent Systems">Intelligent Systems</option>
+
+									
+								</select>
+						</div>
+						<div class="form-group">
+							<label for="Course_Id" class="control-label">Course_Id</label>				
+							<select class="form-control" id="Course_Id" name="Course_Id"/>
+								<!-- <option value="">--Select--</option> -->
+								<!-- <option value="{{subjects.course_id}}">{{subjects.course_id}}</option> -->
+								{% for subject in subjects %}
+									<option value="{{subject.course_id}}">{{subject.course_id}}</option>		
+								{% endfor %}								
+							</select>							
+						</div>
+						<div class="form-group">							
+							<label for="Expertise" class="control-label">Expertise</label>				
+							<input type="text" name="Expertise" id="Expertise" autocomplete="off" class="form-control" placeholder="Expertise" value="{{teacher.Expertise}}"/>										
+						</div>
+						<div class="form-group">							
+							<label for="YearsOfExperience" class="control-label">Experience</label>				
+							<input type="number" name="YearsOfExperience" id="YearsOfExperience" autocomplete="off" class="form-control" placeholder="YearsOfExperience" value="{{teacher.YearsOfExperience}}"/>										
+						</div>
+						<div class="form-group">							
+							<label for="Recognitions" class="control-label">Recognitions</label>				
+							<input type="text" name="Recognitions" id="Recognitions" autocomplete="off" class="form-control" placeholder="Recognitions" value="{{teacher.Recognitions}}"/>										
+						</div>
+						<div class="form-group">
+								<label for="OfficeHours" class="control-label">OfficeHours*</label>	
+								<select name="OfficeHours" id="OfficeHours" class="form-control" required>
+									<option value="{{teacher.OfficeHours}}">{{teacher.OfficeHours}}</option>
+									<option value="Mon-Fri: 9am-5pm">Mon-Fri: 9am-5pm</option>
+									<option value="Tue-Sat: 10am-6pm">Tue-Sat: 10am-6pm</option>
+									<option value="Mon-Wed: 8am-4pm">Mon-Wed: 8am-4pm</option>
+									<option value="Thu-Sat: 9am-5pm">Thu-Sat: 9am-5pm</option>
+									
+								</select>
+						</div>
+						
+						<div class="modal-footer">
+							<input type="hidden" name="Teacher_Id" id="Teacher_Id" value="{{teacher.Teacher_Id}}" />						
+							<input type="hidden" name="action" id="action" value="updateTeacher" />
+							<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+						</div>
+					
+					</form>
+				{% endfor %}						
+				</div>	
+			</div>
+		</div>	
+	</div> 
+</body>
+</html>

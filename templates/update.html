@@ -1,0 +1,48 @@
+<!--Store this code in 'update.html' file inside the 'templates' folder-->
+<html lang="en">
+	<head>
+		<title>update</title>
+		<!-- <link rel="stylesheet" href="../static/style.css"> -->
+	</head>
+	<body bgcolor="#e6ffee">
+		<div class="one">
+			<!-- <div class="two">
+				<h1>Side Bar</h1>
+				<ul>
+					<li><a href="{{url_for('index')}}">Index</a></li>
+					<li><a href="{{url_for('display')}}">Display</a></li>
+					<li class="active"><a href="{{url_for('update')}}">Update</a></li>
+					<li><a href="{{url_for('logout')}}">Log out</a></li>
+				</ul>
+			</div> -->
+			<div class="content" align="center">
+				<div class="topbar">
+					<h2>Welcome!! You are in Update Page!! </h2>				 
+				</div></br></br>
+				<div class="contentbar">
+				<h1>Fill Your Details to Update</h1></br>
+			<form action="{{ url_for('update') }}" method="post" autocomplete="off">
+		    <div class="msg">{{ msg }}</div>
+            {% for item in items %}		
+            <input type="text" name="UsernameId" placeholder="Enter Your Username" class="textbox" id="UsernameId" required></br></br>
+			<input type="password" name="password" placeholder="Enter Your Password" class="textbox" id="password" required></br></br>
+			<input type="email" name="email" placeholder="Enter Your Email ID" class="textbox" id="email" required></br></br>
+			<input type="text" name="FirstName" placeholder="Enter Your FirstName" class="textbox" id="FirstName" required></br></br>
+			<input type="text" name="LastName" placeholder="Enter Your LastName" class="textbox" id="LastName" required></br></br>
+			<input type="text" name="PhoneNumber" placeholder="Enter Your PhoneNumber" class="textbox" id="PhoneNumber" required></br></br>
+			<!-- <input type="text" name="Gender" placeholder="Enter Your Gender" class="textbox" id="Gender" required></br></br> -->
+            <label>  
+                Gender:   
+                </label>  <br>  
+                <input type="radio" id="Gender" name="Gender" value="male"/> Male    
+                <br>  
+                <input type="radio" id="Gender" name="Gender" value="female"/> Female <br/>   
+			<input type="text" name="Status" placeholder="Enter Your Status" class="textbox" id="Status" value="Admin"></br></br>
+					<input type="submit" class="btn" value="Update">
+			</form>				 
+				</div>
+				
+			</div>
+		</div>
+	</body>
+</html>

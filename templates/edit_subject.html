@@ -1,0 +1,70 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/subject.js') }}"></script>
+<body>
+ {% include 'top_menus.html' %}
+  <div class="container">        
+      {% include 'left_menus.html' %}    
+	  <div class="content">
+		<div class="container-fluid">   	
+			<div class="row">
+				<a href="#"><strong><span class="ti-crown"></span> Edit Subject</strong></a>
+				<hr>
+				{% for subject in subjects %}
+				<form method="post" id="subjectForm" action="{{ url_for('save_subject')}}">				
+					<!-- course_id, faculty_id, course_name, topics_covered, rating	 -->
+						<div class="form-group">
+							<label for="course_id" class="control-label">course_id*</label>
+							<input type="text" class="form-control" id="course_id" name="course_id" placeholder="course_id" value="{{subject.course_id}}" required>					
+						</div>	
+						<div class="form-group">
+							<label for="faculty_id" class="control-label">faculty_id</label>				
+							<select class="form-control" id="faculty_id" name="faculty_id"/>
+								<option value="{{subject.faculty_id}}">{{subject.faculty_id}}</option>
+								<!-- <option value="{{subjects.course_id}}">{{subjects.course_id}}</option> -->
+								{% for teacher in teachers %}
+									<option value="{{teacher.Teacher_Id}}">{{teacher.Teacher_Id}}</option>		
+								{% endfor %}								
+							</select>							
+						</div>
+						
+						<div class="form-group">
+							<label for="course_name" class="control-label">course_name*</label>
+							<input type="text" class="form-control" id="course_name" name="course_name" placeholder="course_name" value="{{subject.course_name}}" required>					
+						</div>
+						<div class="form-group">
+							<label for="topics_covered" class="control-label">topics_covered*</label>
+							<input type="text" class="form-control" id="topics_covered" name="topics_covered" placeholder="topics_covered" value="{{subject.topics_covered}}" >					
+						</div>
+						<div class="form-group">
+							<label for="rating" class="control-label">rating*</label>
+							<input type="text" class="form-control" id="rating" name="rating" placeholder="rating" value="{{subject.rating}}" >					
+						</div>
+						<!-- <div class="form-group">
+							<label for="s_type" class="control-label">Subject Type</label><br>							
+							<label class="radio-inline">
+								<input type="radio" name="s_type" id="theory" value="Theory" required>Theory
+							</label>;
+							<label class="radio-inline">
+								<input type="radio" name="s_type" id="practical" value="Practical" required>Practical
+							</label>							
+						</div>	
+						<div class="form-group">
+							<label for="code" class="control-label">Code*</label>
+							<input type="text" class="form-control" id="code" name="code" placeholder="code..." value="{{subject.code}}" required>					
+						</div> -->
+							
+						<div class="modal-footer">
+							<input type="hidden" name="course_id" id="course_id" value="{{subject.course_id}}" />
+							<input type="hidden" name="action" id="action" value="updateSubject" />
+							<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+						</div>
+					
+					</form>	
+					{% endfor %}						
+				</div>	
+			</div>
+		</div>	
+	</div>
+ 
+  </body>
+</html>

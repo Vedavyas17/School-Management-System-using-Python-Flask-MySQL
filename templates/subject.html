@@ -1,0 +1,98 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/subject.js') }}"></script>
+<body>
+ {% include 'top_menus.html' %}
+  <div class="container">        
+      {% include 'left_menus.html' %}    
+	  <div class="content">
+		<div class="container-fluid">   	
+			<div class="row">				 
+				<a href="#"><strong><span class="ti-crown"></span> Subjects Section</strong></a>
+				<hr>		
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-10">
+							<h3 class="panel-title"></h3>
+						</div>
+						<div class="col-md-2" align="right">
+							<button type="button" name="add" id="addSubject" class="btn btn-success btn-xs">Add</button>
+						</div>
+					</div>
+				</div>
+				<table id="subjectList" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>course_id</th>
+							<th>faculty_id</th>	
+							<th>course_name</th>
+							<th>rating</th>							
+							<th></th>
+							<th></th>							
+						</tr>
+					</thead>
+					<tbody>
+					  {% for subject in subjects %}
+					  <tr>
+						<td>{{subject.course_id}}</td>
+						<td>{{subject.faculty_id}}</td>
+						<td>{{subject.course_name}}</td>
+						<td>{{subject.rating}}</td>							
+						<td><a href="{{url_for('edit_subject', course_id=subject.course_id)}}" class="btn btn-primary update">Edit</a></td>
+						<td><a href="{{url_for('delete_subject', course_id=subject.course_id)}}" class="btn btn-danger">Delete</a></td>
+					  </tr> 
+					{% endfor %}	  
+					</tbody>
+				</table>						
+				</div>	
+			</div>
+		</div>	
+	</div>
+  <div id="subjectModal" class="modal fade">
+	<div class="modal-dialog">
+		<form method="post" id="subjectForm" action="{{ url_for('save_subject')}}">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><i class="fa fa-plus"></i> Edit Subject</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="course_id" class="control-label">course_id*</label>
+						<input type="text" class="form-control" id="course_id" name="course_id" placeholder="course_id" required>					
+					</div>	
+					<div class="form-group">
+						<label for="faculty_id" class="control-label">faculty_id</label>				
+						<select class="form-control" id="faculty_id" name="faculty_id"/>
+							<option value="">--Select--</option>
+							<!-- <option value="{{subjects.course_id}}">{{subjects.course_id}}</option> -->
+							{% for teacher in teachers %}
+								<option value="{{teacher.Teacher_Id}}">{{teacher.Teacher_Id}}</option>		
+							{% endfor %}								
+						</select>							
+					</div>
+					
+					<div class="form-group">
+						<label for="course_name" class="control-label">course_name*</label>
+						<input type="text" class="form-control" id="course_name" name="course_name" placeholder="course_name" required>					
+					</div>
+					<div class="form-group">
+						<label for="topics_covered" class="control-label">topics_covered*</label>
+						<input type="text" class="form-control" id="topics_covered" name="topics_covered" placeholder="topics_covered" >					
+					</div>
+					<div class="form-group">
+						<label for="rating" class="control-label">rating*</label>
+						<input type="text" class="form-control" id="rating" name="rating" placeholder="rating" >					
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="course_id" id="course_id" />
+					<input type="hidden" name="action" id="action" value="updateSubject" />
+					<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+  </body>
+</html>

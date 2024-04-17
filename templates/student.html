@@ -1,0 +1,172 @@
+{% include 'header.html' %}
+<script src="{{ url_for('static',filename='js/students.js') }}"></script>
+<body>
+ {% include 'top_menus.html' %}
+  <div class="container">        
+      {% include 'left_menus.html' %}    
+	  <div class="content">
+		<div class="container-fluid">   	
+			<div class="row">
+				<a href="#"><strong><span class="ti-crown"></span> Student Section</strong></a>
+				<hr>		
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-10">
+							<h3 class="panel-title"></h3>
+						</div>
+						<div class="col-md-2" align="right">
+							<button type="button" name="add" id="addStudent" class="btn btn-success btn-xs">Student Admission</button>
+						</div>
+					</div>
+				</div>
+				<table id="studentList" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>StudentId</th>
+							<!-- <th>AdmissionNo</th> -->
+							<th>Name</th>	
+							<!-- <th>CoursesTaken</th> -->
+							<th>Stream</th>	
+							<th>ClassId</th>
+							<th>AcademicYear</th>							
+							<th></th>
+							<th></th>							
+						</tr>
+					</thead>
+					<tbody>
+					  {% for student in students %}
+					  <tr>
+						<td>{{student.StudentId}}</td>
+						<!-- <td>{{student.AdmissionNo}}</td> -->
+						<td>{{student.Name}}</td>
+						<!-- <td>{{student.CoursesTaken}}</td> -->
+						<td>{{student.Stream}}</td>						
+						<td>{{student.ClassId}}</td>
+						<td>{{student.AcademicYear}}</td>						
+						<td><a href="{{url_for('edit_student', StudentId=student.StudentId)}}" class="btn btn-primary update">Edit</a></td>
+						<td><a href="{{url_for('delete_student', StudentId=student.StudentId)}}" class="btn btn-danger">Delete</a></td>
+					  </tr> 
+					{% endfor %}	  
+					</tbody>
+				</table>
+			</div>
+		</div>	
+	</div>
+  </div>
+  <div id="studentModal" class="modal fade">
+	<div class="modal-dialog">
+		<form method="post" id="studentForm" enctype="multipart/form-data" action="{{ url_for('save_student')}}">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><i class="fa fa-plus"></i> Edit Student</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="StudentId" class="control-label">StudentId</label>							
+						<input type="text" class="form-control" id="StudentId" name="StudentId" placeholder="StudentId" required>							
+					</div>
+					<div class="form-group">
+						<label for="FirstName" class="control-label">FirstName</label>							
+						<input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="FirstName.." >							
+					</div>
+					<div class="form-group">
+						<label for="LastName" class="control-label">LastName</label>							
+						<input type="text" class="form-control" id="LastName" name="LastName" placeholder="LastName..">							
+					</div>
+					<div class="form-group">
+						<label for="Email" class="control-label">Email</label>							
+						<input type="email" class="form-control" id="Email" name="Email" placeholder="Email.."  required>							
+					</div>
+					<div class="form-group">
+						<label for="AdmissionNo" class="control-label">Admission Number</label>							
+						<input type="text" class="form-control" id="AdmissionNo" name="AdmissionNo" placeholder="Admission Number.."  required>							
+					</div>	
+					<div class="form-group">
+						<label for="CoursesTaken" class="control-label">CoursesTaken</label>							
+						<input type="text" class="form-control" id="CoursesTaken" name="CoursesTaken" placeholder="CoursesTaken.."  required>							
+					</div>	
+					<div class="form-group">
+						<label for="mname" class="control-label">Academic Year*</label>	
+						<select name="AcademicYear" id="AcademicYear" class="form-control" required>
+							<option value="2019-2020">2019-2020</option>
+							<option value="2021-2022">2021-2022</option>
+							<option value="2022-2023">2022-2023</option>
+							<option value="2020-2021">2020-2021</option>
+							<option value="2023-2024">2023-2024</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="AdmissionDate" class="control-label">Admission Date</label>							
+						<input type="date" class="form-control"  id="AdmissionDate" name="AdmissionDate" placeholder="mm/dd/yyyy">							
+					</div>		
+					<div class="form-group">
+						<label for="mname" class="control-label">Class*</label>	
+						<select name="ClassId" id="ClassId" class="form-control" required>
+							<!-- <option value="">--Select--</option> -->
+							{% for class in classes %}
+								<option value="{{class.class_id}}">{{class.class_id}}</option>		
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="Teacher_Id" class="control-label">Class-Teacher</label>	
+						<select name="classteacher" id="classteacher" class="form-control" required>
+							<option value="">--Select--</option>
+							<option value="101_Mark">101_Mark</option>
+							<option value="102_Veda">102_Veda</option>
+							<option value="103_Vyas">103_Vyas</option>
+							<option value="104_Emily">104_Emily</option>
+							<option value="105_David">105_David</option>
+							<option value="106_Sophia">106_Sophia</option>
+							<option value="107_Nasim">107_Nasim</option>
+							<!-- {% for teacher in teachers %}
+								<option value="{{teacher.Teacher_Id}}">{{teacher.Teacher_Id}}</option>		
+							{% endfor %} -->
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="Stream" class="control-label">Stream*</label>
+						<input type="text" class="form-control" id="Stream" name="Stream" placeholder="Stream">				
+					</div>	
+					<div class="form-group">
+						<label for="Department" class="control-label">Department*</label>
+						<input type="text" class="form-control" id="Department" name="Department" placeholder="Department">				
+					</div>					
+					<!-- <div class="form-group">
+						<label for="gender" class="control-label">Gender</label>				
+						<select class="form-control" id="gender" name="gender"/>
+							<option value="">--Select--</option>							
+							<option value="male">Male</option>
+							<option value="female">Female</option>							
+						</select>							
+					</div>	 -->
+					<!-- <div class="form-group">
+						<label for="email" class="control-label">Date of Birth</label>							
+						<input type="text" class="form-control"  id="dob" name="dob" placeholder="mm/dd/yyyy">							
+					</div>	
+					<div class="form-group">
+						<label for="email" class="control-label">Email</label>							
+						<input type="email" class="form-control"  id="email" name="email" placeholder="Email">							
+					</div>	 -->
+					<div class="form-group">
+						<label for="mobile" class="control-label">Phone</label>							
+						<input type="number" class="form-control" id="Phone" name="Phone" placeholder="Phone">							
+					</div>		
+					<div class="form-group">
+						<label for="address" class="control-label">Address</label>							
+						<input type="text" class="form-control" rows="2" id="Address" name="Address" placeholder="Address">						
+					</div>									
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="StudentId" id="StudentId" />
+					<input type="hidden" name="action" id="action" value="" />
+					<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</form>
+		</div>
+	</div>
+  </body>
+</html>
