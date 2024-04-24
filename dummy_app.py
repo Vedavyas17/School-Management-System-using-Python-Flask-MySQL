@@ -40,28 +40,6 @@ def login():
         else:
             mesage = 'Please enter correct email / password !'
     return render_template('login.html', mesage = mesage)
-    
-# @app.route('/register', methods =['GET', 'POST'])
-# def register():
-#     mesage = ''
-#     if request.method == 'POST':
-#         email = request.form['email']        
-#         password = request.form['password']
-#         UsernameId = request.form['UsernameId']
-#         FirstName = request.form['FirstName']
-#         LastName = request.form['LastName']
-#         PhoneNumber = request.form['PhoneNumber']
-#         Gender = request.form['Gender']  
-#         Status = request.form['Status']  
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         cursor.execute(f"INSERT INTO user( email, password, UsernameId, FirstName, LastName, PhoneNumber, Gender, Status) \
-#                        values('{email}','{password}','{UsernameId}','{FirstName}','{LastName}','{PhoneNumber}','{Gender}','{Status}')")
-#         mysql.connection.commit()
-#         cursor.close()
-
-#         return redirect(url_for('login'))
-    
-#     return render_template('register.html', mesage = mesage)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -279,104 +257,6 @@ def delete_teacher():
         return redirect(url_for('teacher'))
     return redirect(url_for('login'))
     
-
-########################### Teacher section ##################################
-
-# @app.route("/faculty", methods =['GET', 'POST'])
-# def teacher():
-#     if 'loggedin' in session:   
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         # cursor.execute('SELECT t.teacher_id, t.teacher, s.subject FROM teacher t LEFT JOIN subjects s ON s.subject_id = t.subject_id')
-#         cursor.execute('select Teacher_Id, concat(FirstName,LastName) as Name, Department from faculty')
-#         teachers = cursor.fetchall() 
-           
-#         cursor.execute('SELECT * FROM courses')
-#         subjects = cursor.fetchall()  
-#         return render_template("teacher.html", teachers = teachers, subjects = subjects)
-#     return redirect(url_for('login')) 
-    
-# @app.route("/edit_teacher", methods =['GET'])
-# def edit_teacher():
-#     if 'loggedin' in session:
-#         Teacher_Id = request.args.get('Teacher_Id') 
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         # cursor.execute('SELECT t.teacher_id, t.teacher, s.subject FROM teacher t LEFT JOIN subjects s ON s.subject_id = t.subject_id WHERE t.Teacher_Id = %s', (teacher_id,))
-#         cursor.execute('select * from faculty where Teacher_Id = %s', (Teacher_Id,))
-
-#         teachers = cursor.fetchall() 
-        
-#         cursor.execute('SELECT * FROM courses')
-#         subjects = cursor.fetchall()  
-        
-#         return render_template("edit_teacher.html", teachers = teachers, subjects = subjects)
-#     return redirect(url_for('login'))  
-    
-# @app.route("/save_teacher", methods =['GET', 'POST'])
-# def save_teacher():
-#     if 'loggedin' in session:    
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)        
-#         if request.method == 'POST' and 'Teacher_Id' in request.form \
-#             and 'FirstName' in request.form and 'LastName' in request.form \
-#             and 'Email' in request.form and 'Expertise' in request.form \
-#             and 'YearsOfExperience' in request.form and 'Recognitions' in request.form \
-#             and 'Department' in request.form \
-#         and 'OfficeHours' in request.form and 'Course_Id' in request.form:
-#             Teacher_Id = request.form['Teacher_Id'] 
-#             FirstName = request.form['FirstName'] 
-#             LastName = request.form['LastName'] 
-#             Email = request.form['Email'] 
-#             Expertise = request.form['Expertise'] 
-#             YearsOfExperience = request.form['YearsOfExperience'] 
-#             Recognitions = request.form['Recognitions'] 
-#             Department = request.form['Department'] 
-#             OfficeHours = request.form['OfficeHours']   
-#             Course_Id = request.form['Course_Id']          
-#             action = request.form['action']             
-            
-#             if action == 'updateTeacher':
-#                 Teacher_Id = request.form['Teacher_Id'] 
-#                 FirstName = request.form['FirstName'] 
-#                 LastName = request.form['LastName'] 
-#                 Email = request.form['Email'] 
-#                 Expertise = request.form['Expertise'] 
-#                 YearsOfExperience = request.form['YearsOfExperience'] 
-#                 Recognitions = request.form['Recognitions'] 
-#                 Department = request.form['Department'] 
-#                 OfficeHours = request.form['OfficeHours']   
-#                 Course_Id = request.form[Course_Id]     
-#                 cursor.execute('UPDATE faculty \
-#                                SET FirstName = %s, LastName = %s,FirstName = %s, Expertise = %s, \
-#                                YearsOfExperience = %s, Recognitions = %s,Email = %s, Department = %s, \
-#                                Course_Id = %s, OfficeHours = %s WHERE Teacher_Id =% s', 
-#                                 (FirstName,LastName,Expertise,YearsOfExperience,Recognitions,Email,Department,
-#                                  Course_Id, OfficeHours, (Teacher_Id, ), ))
-#                 # cursor.execute('UPDATE teacher SET teacher = %s, subject_id = %s WHERE teacher_id =% s', (techer_name, specialization, (teacherid, ), ))
-
-#                 mysql.connection.commit()        
-#             else: 
-#                 # cursor.execute('INSERT INTO teacher (`teacher`, `subject_id`) VALUES (%s, %s)', (techer_name, specialization))
-#                 cursor.execute('INSERT INTO teacher \
-#                                (Teacher_Id, FirstName, LastName,  Expertise, YearsOfExperience, Recognitions, Email, Department, Course_Id,OfficeHours) VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)', 
-#                                (Teacher_Id,FirstName,LastName,Expertise,YearsOfExperience,Recognitions,Email,Department,
-#                                  Course_Id, OfficeHours))
-
-#                 mysql.connection.commit()        
-#             return redirect(url_for('faculty'))        
-#         elif request.method == 'POST':
-#             msg = 'Please fill out the form field !'        
-#         return redirect(url_for('faculty'))        
-#     return redirect(url_for('login')) 
-    
-# @app.route("/delete_teacher", methods =['GET'])
-# def delete_teacher():
-#     if 'loggedin' in session:
-#         Teacher_Id = request.args.get('Teacher_Id') 
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         cursor.execute('DELETE FROM faculty WHERE Teacher_Id = % s', (Teacher_Id, ))
-#         mysql.connection.commit()   
-#         return redirect(url_for('faculty'))
-#     return redirect(url_for('login'))
-    
 ########################### COURSES ##################################
     
 @app.route("/courses", methods =['GET', 'POST'])
@@ -522,58 +402,6 @@ def delete_class():
         return redirect(url_for('classes'))
     return redirect(url_for('login'))     
 
-########################### SECTIONS ##################################
-
-@app.route("/sections", methods =['GET', 'POST'])
-def sections():
-    if 'loggedin' in session:      
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM section')
-        sections = cursor.fetchall()          
-        return render_template("sections.html", sections = sections)
-    return redirect(url_for('login')) 
-    
-@app.route("/edit_sections", methods =['GET'])
-def edit_sections():
-    if 'loggedin' in session:
-        section_id = request.args.get('section_id') 
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM section WHERE section_id = %s', (section_id,))
-        sections = cursor.fetchall() 
-        return render_template("edit_section.html", sections = sections)
-    return redirect(url_for('login'))    
-    
-@app.route("/save_sections", methods =['GET', 'POST'])
-def save_sections():
-    if 'loggedin' in session:    
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)        
-        if request.method == 'POST' and 'section_name' in request.form:
-            section_name = request.form['section_name']                         
-            action = request.form['action']             
-            
-            if action == 'updateSection':
-                section_id = request.form['sectionid'] 
-                cursor.execute('UPDATE section SET section = %s WHERE section_id  =%s', (section_name, (section_id, ), ))
-                mysql.connection.commit()        
-            else: 
-                cursor.execute('INSERT INTO section (`section`) VALUES (%s)', (section_name, ))
-                mysql.connection.commit()        
-            return redirect(url_for('sections'))        
-        elif request.method == 'POST':
-            msg = 'Please fill out the form field !'        
-        return redirect(url_for('sections'))        
-    return redirect(url_for('login')) 
-    
-@app.route("/delete_sections", methods =['GET'])
-def delete_sections():
-    if 'loggedin' in session:
-        section_id = request.args.get('section_id') 
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('DELETE FROM section WHERE section_id = % s', (section_id, ))
-        mysql.connection.commit()   
-        return redirect(url_for('sections'))
-    return redirect(url_for('login'))  
-
 ########################### STUDENTS ##################################
     
 @app.route("/student", methods =['GET', 'POST'])
@@ -696,29 +524,7 @@ Stream, Department, AdmissionDate, AcademicYear, classteacher))
         elif request.method == 'POST':
             msg = 'Please fill out the form field !'        
         return redirect(url_for('student'))        
-    return redirect(url_for('login')) 
- 
-
-
-# def save_student():
-#     if 'loggedin' in session:    
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)        
-#         if request.method == 'POST' and 'section_name' in request.form:
-#             section_name = request.form['section_name']                         
-#             action = request.form['action']             
-            
-#             if action == 'updateStudent':
-#                 section_id = request.form['sectionid'] 
-#                 cursor.execute('UPDATE section SET section = %s WHERE section_id  =%s', (section_name, (section_id, ), ))
-#                 mysql.connection.commit()        
-#             else: 
-#                 cursor.execute('INSERT INTO section (`section`) VALUES (%s)', (section_name, ))
-#                 mysql.connection.commit()        
-#             return redirect(url_for('sections'))        
-#         elif request.method == 'POST':
-#             msg = 'Please fill out the form field !'        
-#         return redirect(url_for('sections'))        
-#     return redirect(url_for('login'))     
+    return redirect(url_for('login'))   
     
 @app.route("/delete_student", methods =['GET'])
 def delete_student():
@@ -785,25 +591,6 @@ def getClassAttendance():
         return redirect(url_for('studentAttendance'))        
     return redirect(url_for('login'))
 
-# @app.route("/update_attendance", methods =['GET'])
-# def update_attendance():
-#     if 'loggedin' in session:
-#         print("asdf")
-#         Student_id = request.args.get('StudentId') 
-#         print(Student_id)
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         cursor.execute('SELECT * from student_attendance WHERE Student_id = %s', (Student_id,))
-#         student_attendance = cursor.fetchall() 
-        
-#         cursor.execute('SELECT * FROM courses')
-#         subjects = cursor.fetchall()
-
-#         cursor.execute('SELECT * FROM classes')
-#         classes = cursor.fetchall()  
-        
-#         return render_template("update_attendance.html", student_attendance = student_attendance, subjects = subjects, classes = classes)
-#     return redirect(url_for('login')) 
-
 @app.route("/update_attendance", methods =['GET'])
 def update_attendance():
     if 'loggedin' in session:
@@ -820,34 +607,6 @@ def update_attendance():
         
         return render_template("update_attendance.html", student_attendance = student_attendance, subjects = subjects, classes = classes)
     return redirect(url_for('login')) 
-
-# @app.route("/save_attendance", methods=['GET', 'POST'])
-# def save_attendance():
-#     if 'loggedin' in session:
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         if request.method == 'POST' and 'StudentId' in request.form and 'Class_id' in request.form \
-#                 and 'classteacher' in request.form and 'Date' in request.form and 'Attendance' in request.form:
-#             StudentId = request.form['StudentId']
-#             Class_id = request.form['Class_id']
-#             classteacher = request.form['classteacher']
-#             Date = request.form['Date']
-#             Attendance = request.form['Attendance']
-#             action = request.form['action']
-
-#             if action == 'updateAttendance':
-#                 # Update the student_attendance table directly
-#                 cursor.execute('UPDATE student_attendance \
-#                                 SET Class_id = %s, Class_teacher_id = %s, Date = %s, Attendance = %s \
-#                                 WHERE Student_id = %s',
-#                                (Class_id, classteacher, Date, Attendance, StudentId))
-
-#                 # Commit the changes
-#                 mysql.connection.commit()
-
-#                 return redirect(url_for('studentAttendance'))
-
-#     return redirect(url_for('login'))
-
 
 @app.route("/save_attendance", methods =['GET', 'POST'])
 def save_attendance():
@@ -953,25 +712,6 @@ def getFacultyAttendance():
         return redirect(url_for('facultyAttendance'))        
     return redirect(url_for('login'))
 
-# @app.route("/update_attendance", methods =['GET'])
-# def update_attendance():
-#     if 'loggedin' in session:
-#         print("asdf")
-#         Student_id = request.args.get('StudentId') 
-#         print(Student_id)
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         cursor.execute('SELECT * from student_attendance WHERE Student_id = %s', (Student_id,))
-#         student_attendance = cursor.fetchall() 
-        
-#         cursor.execute('SELECT * FROM courses')
-#         subjects = cursor.fetchall()
-
-#         cursor.execute('SELECT * FROM classes')
-#         classes = cursor.fetchall()  
-        
-#         return render_template("update_attendance.html", student_attendance = student_attendance, subjects = subjects, classes = classes)
-#     return redirect(url_for('login')) 
-
 @app.route("/update_facultyattendance", methods =['GET'])
 def update_facultyattendance():
     if 'loggedin' in session:
@@ -988,33 +728,6 @@ def update_facultyattendance():
         
         return render_template("update_facultyattendance.html", faculty_attendance = faculty_attendance, subjects = subjects, classes = classes)
     return redirect(url_for('login')) 
-
-# @app.route("/save_attendance", methods=['GET', 'POST'])
-# def save_attendance():
-#     if 'loggedin' in session:
-#         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#         if request.method == 'POST' and 'StudentId' in request.form and 'Class_id' in request.form \
-#                 and 'classteacher' in request.form and 'Date' in request.form and 'Attendance' in request.form:
-#             StudentId = request.form['StudentId']
-#             Class_id = request.form['Class_id']
-#             classteacher = request.form['classteacher']
-#             Date = request.form['Date']
-#             Attendance = request.form['Attendance']
-#             action = request.form['action']
-
-#             if action == 'updateAttendance':
-#                 # Update the student_attendance table directly
-#                 cursor.execute('UPDATE student_attendance \
-#                                 SET Class_id = %s, Class_teacher_id = %s, Date = %s, Attendance = %s \
-#                                 WHERE Student_id = %s',
-#                                (Class_id, classteacher, Date, Attendance, StudentId))
-
-#                 # Commit the changes
-#                 mysql.connection.commit()
-
-#                 return redirect(url_for('studentAttendance'))
-
-#     return redirect(url_for('login'))
 
 
 @app.route("/save_facultyattendance", methods =['GET', 'POST'])
