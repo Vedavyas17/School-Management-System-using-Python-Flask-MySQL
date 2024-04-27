@@ -1,4 +1,4 @@
--- drop database dummy;
+drop database dummy;
 create database dummy;
 use dummy;
 
@@ -212,9 +212,9 @@ CREATE TABLE Student_attendance (
     Class_teacher_id VARCHAR(10) not null,
     Date TIMESTAMP,
     Attendance ENUM('Present', 'Absent', 'On-Duty','Half-day'),
-    FOREIGN KEY (Student_id) REFERENCES Students(StudentId),
-    FOREIGN KEY (Class_id) REFERENCES Classes(class_id),
-    FOREIGN KEY (Class_teacher_id) REFERENCES Faculty(Teacher_Id)
+    FOREIGN KEY (Student_id) REFERENCES students(StudentId),
+    FOREIGN KEY (Class_id) REFERENCES classes(class_id),
+    FOREIGN KEY (Class_teacher_id) REFERENCES faculty(Teacher_Id)
 );
 --
 -- -- Created by Tumul
@@ -227,30 +227,30 @@ VALUES
 
 -- truncate table faculty_attendance;
 ---------------------------------------------------------------
-select * from user;
+select * from User;
 select * from faculty;
 select * from students;
 select * from courses;
 select * from classes;
-select * from faculty_attendance;
-select * from student_attendance;
+select * from Faculty_attendance;
+select * from Student_attendance;
 select * from classes where Class_id='CLASS_101';
 -- ---------------------------------------------------------------
 SELECT * FROM user WHERE status="Admin";
 
 create view updateAttendance as
 select  s.StudentId, concat(s.FirstName, s.Lastname) as Name, s.CoursesTaken,s.ClassId as Class_id,s.Department, s.classteacher,sa.Date,sa.Attendance
-from students s left join student_attendance sa on s.classId=sa.Class_id;
+from students s left join Student_attendance sa on s.classId=sa.Class_id;
 
 create view updateTeacherAttendance as
 select  t.Teacher_Id, concat(t.FirstName, t.Lastname) as Name, t.Course_Id,t.Department,ta.Class_id,ta.Date,ta.Attendance
-from faculty t left join faculty_attendance ta on t.Department=ta.Department;
+from faculty t left join Faculty_attendance ta on t.Department=ta.Department;
 
 -- drop view updateTeacherAttendance;
 select * from faculty;
-select * from faculty_attendance;
+select * from Faculty_attendance;
 select * from updateTeacherAttendance;
 
 select * from updateAttendance;
 select * from students;
-select * from student_attendance;
+select * from Student_attendance;
