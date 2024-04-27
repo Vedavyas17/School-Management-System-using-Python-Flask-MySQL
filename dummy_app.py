@@ -9,10 +9,10 @@ import sys
 app = Flask(__name__)
    
 app.secret_key = 'abcd21234455'  
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'vedavyas'
-app.config['MYSQL_DB'] = 'dummy'
+app.config['MYSQL_HOST'] = 'dno6xji1n8fm828n.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'l6pm6nho9io7t2z5'
+app.config['MYSQL_PASSWORD'] = 'mfqnyrkz1dkzzipp'
+app.config['MYSQL_DB'] = 'v2vl4gghz146eo4e'
   
 mysql = MySQL(app)
   
@@ -28,13 +28,13 @@ def login():
         email = request.form['email']        
         password = request.form['password']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM user WHERE status="Admin" AND email = % s AND password = % s', (email, password, ))
+        cursor.execute('SELECT * FROM User WHERE status="Admin" AND email = % s AND password = % s', (email, password, ))
         user = cursor.fetchone()
         if user:
             session['loggedin'] = True
-            session['userid'] = user['UsernameId']
-            session['name'] = user['FirstName']
-            session['email'] = user['Email']
+            session['userid'] = User['UsernameId']
+            session['name'] = User['FirstName']
+            session['email'] = User['Email']
             mesage = 'Logged in successfully !'            
             return redirect(url_for('dashboard'))
         else:
@@ -60,7 +60,7 @@ def register():
         Status = request.form['Status']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
-            'SELECT * FROM user WHERE email = % s', (email, ))
+            'SELECT * FROM User WHERE email = % s', (email, ))
         account = cursor.fetchone()
         if account:
             msg = 'Account already exists !'
@@ -69,7 +69,7 @@ def register():
         elif not re.match(r'[A-Za-z0-9]+', email):
             msg = 'name must contain only characters and numbers !'
         else:
-            cursor.execute('INSERT INTO user (UsernameId, password, email, FirstName, LastName, PhoneNumber, Gender, Status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+            cursor.execute('INSERT INTO User (UsernameId, password, email, FirstName, LastName, PhoneNumber, Gender, Status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
                (UsernameId, password, email, FirstName, LastName, PhoneNumber, Gender, Status))
             mysql.connection.commit()
             msg = 'You have successfully registered !'
@@ -107,7 +107,7 @@ def update():
         elif not re.match(r'[A-Za-z0-9]+', email):
             msg = 'name must contain only characters and numbers !'
         else:
-            cursor.execute('UPDATE user SET email =% s,\
+            cursor.execute('UPDATE User SET email =% s,\
             password =% s, UsernameId =% s, FirstName =% s, \
             LastName =% s, PhoneNumber =% s, Gender =% s, \
             Status =% s WHERE email =% s', (
