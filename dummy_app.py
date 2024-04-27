@@ -28,7 +28,7 @@ def login():
         email = request.form['email']        
         password = request.form['password']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM User WHERE status="Admin" AND email = % s AND password = % s', (email, password, ))
+        cursor.execute('SELECT * FROM User WHERE status="Admin" AND Email = % s AND Password = % s', (email, password, ))
         user = cursor.fetchone()
         if user:
             session['loggedin'] = True
