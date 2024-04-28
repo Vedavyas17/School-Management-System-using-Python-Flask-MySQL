@@ -8,6 +8,12 @@ import sys
     
 app = Flask(__name__)
    
+# app.secret_key = 'abcd21234455'  
+# app.config['MYSQL_HOST'] = 'dno6xji1n8fm828n.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
+# app.config['MYSQL_USER'] = 'l6pm6nho9io7t2z5'
+# app.config['MYSQL_PASSWORD'] = 'mfqnyrkz1dkzzipp'
+# app.config['MYSQL_DB'] = 'v2vl4gghz146eo4e'
+
 app.secret_key = 'abcd21234455'  
 app.config['MYSQL_HOST'] = 'dno6xji1n8fm828n.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
 app.config['MYSQL_USER'] = 'l6pm6nho9io7t2z5'
