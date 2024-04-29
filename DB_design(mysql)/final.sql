@@ -1,4 +1,4 @@
-drop database dummy;
+-- drop database dummy;
 create database dummy;
 use dummy;
 
@@ -11,7 +11,7 @@ CREATE TABLE faculty (
     YearsOfExperience INT,
     Gender ENUM('male', 'female'),
     Recognitions VARCHAR(100),
-    Email VARCHAR(100) CHECK (Email LIKE '%@%') not null,
+    Email VARCHAR(100) not null CHECK (Email LIKE '%@%'),
     OfficeHours ENUM('Mon-Fri: 9am-5pm', 'Thu-Sat: 9am-5pm', 'Mon-Wed: 8am-4pm', 'Tue-Sat: 10am-6pm')
 --     FOREIGN KEY (Teacher_Id) REFERENCES User(UsernameId) ON DELETE CASCADE
 );
@@ -20,8 +20,8 @@ CREATE TABLE faculty (
 ALTER TABLE faculty
 ADD COLUMN Department ENUM('Computer Science', 'Data Science', 'Statistics', 'Chemistry', 'Admin', 'Intelligent Systems');
 
-ALTER TABLE faculty
-DROP COLUMN Department;
+#ALTER TABLE faculty
+#DROP COLUMN Department;
 
 ALTER TABLE faculty
 ADD COLUMN status VARCHAR(10) NOT NULL DEFAULT 'teacher';
@@ -30,7 +30,7 @@ CREATE TABLE students (
     StudentId VARCHAR(50) not null PRIMARY KEY,
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
-    Email VARCHAR(100) CHECK (Email LIKE '%@%') not null,
+    Email VARCHAR(100) not null CHECK (Email LIKE '%@%'),
     Phone VARCHAR(10),
     Gender ENUM('male', 'female'),
     CoursesTaken TEXT,
@@ -102,19 +102,19 @@ select * from students;
 select * from faculty;
 
 -- Created by Vedavyas, Sumit
-CREATE TABLE IF NOT EXISTS User (
+CREATE TABLE IF NOT EXISTS user (
     UsernameId VARCHAR(50) not null PRIMARY KEY,
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
-    Email VARCHAR(100) CHECK (Email LIKE '%@%') not null,
+    Email VARCHAR(100) not null CHECK (Email LIKE '%@%'),
     Password VARCHAR(100) not null,
     PhoneNumber VARCHAR(10) CHECK (CHAR_LENGTH(PhoneNumber) = 10),
     Gender ENUM('male', 'female')
 );
-ALTER TABLE User
+ALTER TABLE user
 ADD COLUMN status VARCHAR(10) NOT NULL DEFAULT 'Admin';
 
-INSERT INTO User (UsernameId, FirstName, LastName, Email, Password, PhoneNumber, Gender, Status)
+INSERT INTO user (UsernameId, FirstName, LastName, Email, Password, PhoneNumber, Gender, Status)
 VALUES 
 -- ('101_Mark', 'Mark', 'Taylor', 'mark.taylor@example.com', 'password123', '1234567890', 'male', 'Teacher'),
 -- ('104_Emily', 'Emily', 'Clark', 'emily.clark@example.com', 'password456', '9876543210', 'female', 'Teacher'),
@@ -190,8 +190,8 @@ CREATE TABLE Faculty_attendance (
     FOREIGN KEY (Class_id) REFERENCES classes(class_id)
 );
 
-alter table Faculty_attendance
-add column  department ENUM('Computer Science', 'Data Science', 'Statistics','Intelligent Systems', 'Chemistry', 'Administration');
+# alter table Faculty_attendance
+# add column  department ENUM('Computer Science', 'Data Science', 'Statistics','Intelligent Systems', 'Chemistry', 'Administration');
 
 -- -- Created by Sumit
 INSERT INTO Faculty_attendance (teacher_id, department, Class_id, Date, Attendance)
@@ -212,9 +212,9 @@ CREATE TABLE Student_attendance (
     Class_teacher_id VARCHAR(10) not null,
     Date TIMESTAMP,
     Attendance ENUM('Present', 'Absent', 'On-Duty','Half-day'),
-    FOREIGN KEY (Student_id) REFERENCES students(StudentId),
-    FOREIGN KEY (Class_id) REFERENCES classes(class_id),
-    FOREIGN KEY (Class_teacher_id) REFERENCES faculty(Teacher_Id)
+    FOREIGN KEY (Student_id) REFERENCES Students(StudentId),
+    FOREIGN KEY (Class_id) REFERENCES Classes(class_id),
+    FOREIGN KEY (Class_teacher_id) REFERENCES Faculty(Teacher_Id)
 );
 --
 -- -- Created by Tumul
@@ -227,30 +227,30 @@ VALUES
 
 -- truncate table faculty_attendance;
 ---------------------------------------------------------------
-select * from User;
+select * from user;
 select * from faculty;
 select * from students;
 select * from courses;
 select * from classes;
-select * from Faculty_attendance;
-select * from Student_attendance;
+select * from faculty_attendance;
+select * from student_attendance;
 select * from classes where Class_id='CLASS_101';
 -- ---------------------------------------------------------------
 SELECT * FROM user WHERE status="Admin";
 
 create view updateAttendance as
 select  s.StudentId, concat(s.FirstName, s.Lastname) as Name, s.CoursesTaken,s.ClassId as Class_id,s.Department, s.classteacher,sa.Date,sa.Attendance
-from students s left join Student_attendance sa on s.classId=sa.Class_id;
+from students s left join student_attendance sa on s.classId=sa.Class_id;
 
 create view updateTeacherAttendance as
 select  t.Teacher_Id, concat(t.FirstName, t.Lastname) as Name, t.Course_Id,t.Department,ta.Class_id,ta.Date,ta.Attendance
-from faculty t left join Faculty_attendance ta on t.Department=ta.Department;
+from faculty t left join faculty_attendance ta on t.Department=ta.Department;
 
 -- drop view updateTeacherAttendance;
 select * from faculty;
-select * from Faculty_attendance;
+select * from faculty_attendance;
 select * from updateTeacherAttendance;
 
 select * from updateAttendance;
 select * from students;
-select * from Student_attendance;
+select * from student_attendance;
